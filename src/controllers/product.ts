@@ -116,16 +116,20 @@ export const newProduct = TryCatch(async(req: Request<{},{},NewProductRequestBod
     if (!name || !price || !stock || !category) {
         return next(new ErrorHandler("Please enter all fields", 400));
     }
+    console.log("Hello");
 
     const photosURL = await uploadToCloudinary(photos);
+
+    console.log(photosURL);
 
     await Product.create({
         name,
         price,
         stock,
         category: category.toLowerCase(),
-        photo: photosURL,
+        photos: photosURL,
     });
+
 
     invalidateCache({product: true, admin: true});
 
