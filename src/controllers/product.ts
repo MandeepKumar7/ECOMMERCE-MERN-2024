@@ -116,10 +116,11 @@ export const newProduct = TryCatch(async(req: Request<{},{},NewProductRequestBod
     if (!name || !price || !stock || !category) {
         return next(new ErrorHandler("Please enter all fields", 400));
     }
-    console.log("Hello");
+    
 
     const photosURL = await uploadToCloudinary(photos);
 
+    console.log("Before create Hello");
     console.log(photosURL);
 
     await Product.create({
@@ -159,8 +160,13 @@ export const updateProduct = TryCatch(async(req, res, next) => {
 
         await deleteFromCloudinary(ids);
 
+        console.log("Before update Hello");
+        console.log(photosURL);
         //product.photos = photosURL;
         product.updateOne({$set: {photos: photosURL}})
+        console.log("After update Hello");
+        console.log(product);
+        console.log(product.photos);
     }
 
     if(name) product.name = name;
